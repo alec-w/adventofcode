@@ -4,14 +4,14 @@
 #include <string>
 #include <algorithm>
 
-std::tuple<int, int, char> parseConstraint(std::string constraint)
+std::tuple<int, int, char> parseConstraint(auto constraint)
 {
-    auto char_count_delimmeter = constraint.find_first_of("-");
-    auto min = std::stoi(constraint.substr(0, char_count_delimmeter));
-    auto constraint_delimmeter = constraint.find_first_of(" ");
-    auto max = std::stoi(constraint.substr(char_count_delimmeter + 1, constraint_delimmeter));
-    auto character = constraint[constraint.size() - 2];
-    return {min, max, character};
+    auto char_count_delimmiter = constraint.find_first_of("-");
+    return {
+        std::stoi(constraint.substr(0, char_count_delimmiter)),
+        std::stoi(constraint.substr(char_count_delimmiter + 1, constraint.size() - 4)),
+        constraint[constraint.size() - 2]
+    };
 }
 
 int main(int argc, char* argv[])
