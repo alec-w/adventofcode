@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/alec-w/adventofcode/2022/day2/internal"
+	"github.com/alec-w/adventofcode/2022/helpers"
 )
 
 func RoundFromString(input string) internal.Round {
@@ -31,21 +30,14 @@ func RoundFromString(input string) internal.Round {
 }
 
 func main() {
-	file, err := os.Open("../input.txt")
+	lines, err := helpers.FileToStrings("../input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	total := 0
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		total += RoundFromString(scanner.Text()).Score()
+	for _, line := range lines {
+		total += RoundFromString(line).Score()
 	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-
 	fmt.Printf("total: %d\n", total)
 }
