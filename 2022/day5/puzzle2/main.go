@@ -14,10 +14,12 @@ func main() {
 	}
 
 	for _, instruction := range instructions {
-		for i := 0; i < instruction.Amount; i++ {
-			stacks[instruction.To-1] = append(stacks[instruction.To-1], stacks[instruction.From-1][len(stacks[instruction.From-1])-1])
-			stacks[instruction.From-1] = stacks[instruction.From-1][:len(stacks[instruction.From-1])-1]
-		}
+		toStack := stacks[instruction.To-1]
+		fromStack := stacks[instruction.From-1]
+		toStack = append(toStack, fromStack[len(fromStack)-instruction.Amount:]...)
+		fromStack = fromStack[:len(fromStack)-instruction.Amount]
+		stacks[instruction.To-1] = toStack
+		stacks[instruction.From-1] = fromStack
 	}
 
 	for _, stack := range stacks {
