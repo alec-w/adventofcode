@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"math"
 	"os"
 	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/alec-w/adventofcode/2024/internal/load"
 )
 
 func main() {
@@ -20,17 +21,12 @@ func main() {
 }
 
 func app() (int, error) {
-	file, err := os.Open("../input.txt")
+	lines, err := load.FileToLines("../input.txt")
 	if err != nil {
 		return 0, err
 	}
-	var input strings.Builder
-	if _, err := io.Copy(&input, file); err != nil {
-		return 0, err
-	}
-	lines := strings.Split(input.String(), "\n")
 	list1, list2 := make([]int, len(lines)), make([]int, len(lines))
-	for i, line := range strings.Split(input.String(), "\n") {
+	for i, line := range lines {
 		if strings.TrimSpace(line) == "" {
 			continue
 		}
